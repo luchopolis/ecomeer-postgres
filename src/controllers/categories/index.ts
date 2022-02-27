@@ -36,4 +36,15 @@ export default new (class Category {
     const sanitized = responseFormat.responseFormated(rows);
     res.json(sanitized);
   }
+
+  async countAllProductsByCategory(req: Request, res:Response, next:NextFunction){
+    try {
+      const data = await CategoryService.countProducts()
+      const sanitized = responseFormat.responseFormated(data.rows);
+      res.json(sanitized)
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
 })();

@@ -12,6 +12,7 @@ class CategoryRouter extends CoreRouter{
     // definir rutas
     initRoutes(){
         this._router.get('/', controllers.categories.getAll)
+        this._router.get('/data', controllers.categories.countAllProductsByCategory)
         this._router.get('/:id', controllers.categories.show)
         this._router.get('/:id/products', controllers.categories.productosByCategory)
     }

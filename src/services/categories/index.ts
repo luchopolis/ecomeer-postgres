@@ -26,5 +26,10 @@ export default new class CategoryService {
         return Connection.query(query)
     }
 
+    async countProducts() {
+        const query = `select * from vwproductsbycategory`;
+        return Connection.query(query);
+    }
+
 
 }
