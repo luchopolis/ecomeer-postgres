@@ -22,13 +22,24 @@ export default new class Order {
         res.json(formatResponse)
     }
     async create(req: Request, res: Response, next: NextFunction){
-        const create = await Orders.createOrden(1,1)
-        res.json(create)
+        const { user_id, direccionId }  = req.body
+        const create = await Orders.createOrden(user_id, direccionId)
+        res.json({ data: { order: create }})
     }
 
     async createOrderDetail(req: Request, res: Response, next: NextFunction){
         const { orderId, productId, quantity } = req.body.data
         const create = await Orders.createOrdenDetail(orderId,productId,quantity)
         res.json(create.rows[0])
+    }
+
+    async productsFromOrder(req: Request, res: Response, next: NextFunction){
+        const { orderId } = req.params
+        const result = await Orders.getOrderProducts(Number.parseInt(orderId))
+        const total = result.reduce( function(a, b){
+            return Number.parseFloat(a) + Number.parseFloat(b['precio_final']);
+        }, 0);
+        
+        res.json({ order: orderId, data: { productos: result,total }})
     }
 }

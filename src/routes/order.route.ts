@@ -14,6 +14,7 @@ class OrderRouter extends CoreRouter{
         this._router.post('/', controllers.orders.create)
         this._router.post('/orderDetail', controllers.orders.createOrderDetail)
         this._router.get('/:orderId/orderInfo/', controllers.orders.orderInfo)
+        this._router.get('/:orderId/productsFromOrder', controllers.orders.productsFromOrder)
     }
 }
 

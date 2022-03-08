@@ -31,4 +31,8 @@ export default new class Orders {
         return Connection.query(query)
     }
 
+    async getOrderProducts(orderId: number) {
+        const { rows } = await Connection.query(`select * from productsFromOrder(${orderId})`)
+        return rows
+    }
 }
