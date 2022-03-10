@@ -2,6 +2,12 @@ import { QueryResult } from 'pg';
 import Connection from '../../db/connection';
 import moment from 'moment';
 
+enum status {
+    'pendiente',
+    'cancelada',
+    'procesado'
+} 
+
 export default new class Orders {
     nameEntity: string = 'order_tb'
     extraTable:string = 'order_detail'
@@ -33,6 +39,12 @@ export default new class Orders {
 
     async getOrderProducts(orderId: number) {
         const { rows } = await Connection.query(`select * from productsFromOrder(${orderId})`)
+        return rows
+    }
+
+    async changeOrderStatus(orderId: number, status:status){
+        console.log(status)
+        const { rows } = await Connection.query(`UPDATE order_tb SET estado = '${status}' WHERE id=${orderId}`)
         return rows
     }
 }

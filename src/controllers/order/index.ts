@@ -42,4 +42,17 @@ export default new class Order {
         
         res.json({ order: orderId, data: { productos: result,total }})
     }
+
+    async changeStatus(req: Request, res: Response, next: NextFunction){
+        const { orderId } = req.params
+        const { status } = req.body
+       
+        try {
+            const result = await Orders.changeOrderStatus(Number.parseInt(orderId), status)
+            res.json({ data: result })
+        } catch (error) {
+            console.log(error)
+        }
+        
+    }
 }
